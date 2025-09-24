@@ -15,6 +15,9 @@ class SideMenuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Drawer(
       child: Column(
         children: [
@@ -51,18 +54,18 @@ class SideMenuView extends StatelessWidget {
                     color: isSelected ? Colors.blue.shade50 : null,
                     borderRadius: BorderRadius.circular(12),
                     border: isSelected
-                        ? Border.all(color: Colors.blue, width: 2)
+                        ? Border.all(color: colorScheme.primary, width: 2)
                         : null,
                   ),
                   child: ListTile(
                     leading: Icon(item.icon,
-                        color: isSelected ? Colors.blue : Colors.grey[700]),
+                        color: isSelected ? colorScheme.primary : Colors.grey[700]),
                     title: Text(
                       item.title,
                       style: TextStyle(
                         fontWeight:
                         isSelected ? FontWeight.bold : FontWeight.normal,
-                        color: isSelected ? Colors.blue[800] : Colors.black87,
+                        color: isSelected ? colorScheme.primary.withValues(alpha: 0.8) : Colors.black87,
                       ),
                     ),
                     onTap: () => onTap(item),

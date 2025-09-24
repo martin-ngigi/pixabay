@@ -46,13 +46,19 @@ class HttpUtil{
      if(authorization != null){
        requestOptions.headers!.addAll(authorization);
      }
-     Response response = await dio.post(path,
+
+    print("---> [HttpUtil][POST] URL: ${path}");
+
+    Response response = await dio.post(path,
        data: data,
        queryParameters: queryParameters,
        options: requestOptions
      );
 
-    print("---> [HttpUtil] response: ${response}");
+    print("---> [HttpUtil][POST] URL: ${response.requestOptions.uri}");
+    print("---> [HttpUtil][POST] Status: ${response.statusCode}");
+    print("---> [HttpUtil][POST] Raw Response: ${response.data}");
+    print("---> [HttpUtil][POST] response: ${response}");
 
     return response;
    }
@@ -79,11 +85,17 @@ class HttpUtil{
     if(authorization != null){
       requestOptions.headers!.addAll(authorization);
     }
+
+    print("---> [HttpUtil][GET] URL: ${Constants.PIXABAY_BASE_URL}${path}");
     var response = await dio.get(path,
         data: data,
         options: requestOptions
     );
-    print("--------> [HttpUtil] response: ${response}");
+
+    print("---> [HttpUtil][GET] URL: ${response.requestOptions.uri}");
+    print("---> [HttpUtil][GET] Status: ${response.statusCode}");
+    print("---> [HttpUtil][GET] Raw Response: ${response.data}");
+    print("---> [HttpUtil][GET] Raw Response: ${response.data.toString()}");
 
     return response;
   }

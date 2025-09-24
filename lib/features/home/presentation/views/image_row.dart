@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pixabay/core/components/photo_tile.dart';
 import 'package:pixabay/features/home/data/models/pixabay_response_model.dart';
 import 'package:pixabay/features/home/presentation/views/home_view.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ImageRow extends StatelessWidget {
   //final Photo photo;
@@ -19,7 +21,7 @@ class ImageRow extends StatelessWidget {
           // image
           AspectRatio(
             aspectRatio: 4 / 3,
-            child: Image.network(photo.webformatURL ?? "", fit: BoxFit.cover),
+            child: PhotoTile(imageUrl: photo.webformatURL ?? ""),
           ),
 
           Column(

@@ -33,7 +33,7 @@ class _GalleryViewState extends State<GalleryView> {
 
   _initDashboard(){
     homeController = BlocProvider.of<HomeController>(NavigationService.navigatorKey.currentContext!);
-    homeController.fetchHomeData("cars");
+    homeController.fetchHomeData("cats");
   }
 
   @override

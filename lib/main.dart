@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixabay/core/routes/route_helper.dart';
+import 'package:pixabay/core/utils/navigatorkey.dart';
 import 'package:pixabay/features/dashboard/presentation/controllers/dashboard_controller.dart';
 import 'package:pixabay/features/gallery/presentation/controllers/gallery_controller.dart';
 import 'package:pixabay/features/home/presentation/controllers/home_controller.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
+          navigatorKey: NavigationService.navigatorKey,
           title: 'Pixabay web',
           theme: ThemeData(
             useMaterial3: true,

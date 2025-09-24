@@ -41,7 +41,12 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
                 seedColor: Colors.blue,
                 primary: Colors.blue,
-                secondary: Colors.blue.withAlpha(100)
+                secondary: Colors.blue.withAlpha(100),
+            ),
+            textTheme: ThemeData.light().textTheme.copyWith(
+              bodyLarge: TextStyle(color: Colors.grey[700]),
+              bodyMedium: TextStyle(color: Colors.grey[700]),
+              bodySmall: TextStyle(color: Colors.grey[700]),
             ),
           ),
           //home: HomeView(),

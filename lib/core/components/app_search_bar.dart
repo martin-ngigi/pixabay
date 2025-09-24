@@ -68,7 +68,6 @@ class _AppSearchBarState extends State<AppSearchBar> {
             onPressed: () => widget.onSearch(_controller.text.trim()),
           ),
 
-          // ✅ Fixed suffix with clear + extra search button
           suffixIcon: Row(
             mainAxisSize: MainAxisSize.min, // important to avoid overflow
             children: [

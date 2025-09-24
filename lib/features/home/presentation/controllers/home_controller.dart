@@ -12,9 +12,11 @@ class HomeController extends Cubit<int>{
 
   Future<void> fetchHomeData( String query) async {
     updateLoadingBar(true);
+    return;
 
     try {
       final response = await homeUseCases.executeGetHomeData(query);
+
       if(response.statusCode == 200) {
         PixabayResponseModel pixabayResponseModel = PixabayResponseModel.fromJson(response.data);
         if (pixabayResponseModel.hits != null ){

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pixabay/features/home/data/models/pixabay_response_model.dart';
 import 'package:pixabay/features/home/presentation/views/home_view.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ImageRow extends StatelessWidget {
   //final Photo photo;
@@ -20,28 +21,28 @@ class ImageRow extends StatelessWidget {
             aspectRatio: 4 / 3,
             child: Image.network(photo.webformatURL ?? "", fit: BoxFit.cover),
           ),
+
           Column(
-            spacing: 10,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // title
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(3.0),
                 child: Text(photo.user ?? "--", style: Theme.of(context).textTheme.bodySmall),
               ),
 
-              // tags
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              Container(
+                height: 20,
+                padding: const EdgeInsets.all(3.0),
                 child: Text(
                   photo.tags ?? "--",
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

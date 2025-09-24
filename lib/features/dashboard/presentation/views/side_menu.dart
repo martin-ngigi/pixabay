@@ -32,7 +32,7 @@ class SideMenuView extends StatelessWidget {
             ),
             currentAccountPicture: CircleAvatar(
               backgroundImage: AssetImage(
-                "assets/images/person.jpg",
+                "assets/images/person.png",
               ),
             ),
             accountName: const Text(

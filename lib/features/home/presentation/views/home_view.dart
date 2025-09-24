@@ -4,6 +4,7 @@ import 'package:pixabay/core/components/loading_view.dart';
 import 'package:pixabay/core/utils/navigatorkey.dart';
 import 'package:pixabay/features/home/presentation/controllers/home_controller.dart';
 import 'package:pixabay/features/home/presentation/views/image_row.dart';
+import 'package:pixabay/features/home/presentation/views/loading_row_skeletonizer.dart';
 import 'package:pixabay/features/home/presentation/views/responsive_list_grid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,7 +45,13 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeController, int>(builder: (homeContext, index){
       if (homeController.isLoading){
-        return LoadingView(message: "Fetching your data...");
+        //return LoadingView(message: "Fetching your data...");
+        return ResponsiveListGrid(
+          items: photos,
+          itemBuilder: (context, photo, index) {
+            return LoadingRowSkeletonizer();
+          },
+        );
       }
 
       if (!homeController.isLoading && homeController.errorMessage.isNotEmpty){
@@ -62,7 +69,9 @@ class _HomeViewState extends State<HomeView> {
           child: ResponsiveListGrid(
             items: homeController.hits,
             itemBuilder: (context, photo, index) {
-              return ImageRow(photo: photo);
+              return ImageRow(
+                photo: photo,
+              );
             },
           ),
         ),

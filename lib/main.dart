@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixabay/core/routes/route_helper.dart';
-import 'package:pixabay/features/dashboard/controllers/dashboard_controller.dart';
+import 'package:pixabay/features/dashboard/presentation/controllers/dashboard_controller.dart';
 import 'package:pixabay/features/gallery/presentation/controllers/gallery_controller.dart';
 import 'package:pixabay/features/home/presentation/controllers/home_controller.dart';
 import 'package:pixabay/features/home/presentation/views/home_view.dart';

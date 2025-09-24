@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:pixabay/features/dashboard/views/dashboard_view.dart';
+import 'package:pixabay/features/dashboard/presentation/views/dashboard_view.dart';
 import 'package:pixabay/features/gallery/presentation/views/gallery_view.dart';
 import 'package:pixabay/features/home/presentation/views/home_view.dart';
 import 'package:pixabay/features/profile/presentation/views/profile_view.dart';

@@ -70,7 +70,7 @@ class _DashboardViewState extends State<DashboardView> {
                       ),
                   ),
 
-                  const VerticalDivider(width: 1),
+                  //const VerticalDivider(width: 1),
 
                   Expanded(
                     child: _getPage(currentMenuItem.route),

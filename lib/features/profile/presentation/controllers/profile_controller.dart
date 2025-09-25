@@ -1,4 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pixabay/features/profile/data/models/profile_model.dart';
+import 'package:pixabay/features/profile/data/repositories/home_repository_impl.dart';
+import 'package:pixabay/features/profile/domain/use_cases/profile_usecases.dart';
 
 class ProfileController extends Cubit<int> {
   ProfileController(super.initialState);
@@ -18,6 +21,7 @@ class ProfileController extends Cubit<int> {
 
   bool isLoading = false;
   String successMessage = "";
+  String errorMessage = "";
 
   final List<String> categories = ["Nature", "Cars", "Technology", "Animals"];
 
@@ -26,6 +30,8 @@ class ProfileController extends Cubit<int> {
     fullNameError = null;
     emit(state > 0 ? 0 : 1);
   }
+
+  final ProfileUseCases profileUseCases = ProfileUseCases(profileRepository: ProfileRepositoryImpl());
 
   void updateEmail(String value) {
     email = value;
@@ -98,4 +104,35 @@ class ProfileController extends Cubit<int> {
     isLoading = value;
     emit(state > 0 ? 0 : 1);
   }
+
+  Future<void> saveUserProfile(ProfileModel profileModel) async {
+    if (!_validateInputs()) return;
+
+    updateLoading(true);
+    successMessage = "";
+    errorMessage = "";
+
+    try {
+      final response = await profileUseCases.saveProfile(profileModel);
+
+      if(response.statusCode == 200) {
+        ProfileModel profileModel = ProfileModel.fromJson(response.data);
+        successMessage = "User with id ${profileModel.id} saved successfully.";
+      }
+      else {
+        errorMessage = "Failed to fetch data. Please try again.";
+      }
+      print("Profile data: $response");
+      emit(state > 0 ? 0 : 1);
+    }
+    catch (e) {
+      print("Error fetching Profile data: $e");
+      errorMessage = "Failed to fetch data. Please try again.";
+    }
+
+    updateLoading(false);
+    emit(state > 0 ? 0 : 1);
+
+  }
+
 }

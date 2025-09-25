@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixabay/core/components/app_input_field.dart';
+import 'package:pixabay/features/profile/data/models/profile_model.dart';
 import 'package:pixabay/features/profile/presentation/controllers/profile_controller.dart';
 import 'package:pixabay/core/components/loading_view.dart';
 
@@ -27,12 +28,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileController, int>(
-      builder: (context, _) {
-        if (profileController.isLoading) {
-          return const LoadingView(message: "Saving profile...");
-        }
-
+    return BlocBuilder<ProfileController, int>( builder: (context, _) {
         return Scaffold(
           body: Center(
             child: ConstrainedBox(
@@ -43,20 +39,25 @@ class _ProfileViewState extends State<ProfileView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch, // buttons full-width
                     children: [
+
                       InputField(
                         label: "Full Name",
                         controller: _nameCtrl,
                         onChanged: profileController.updateFullName,
                         errorText: profileController.fullNameError,
                       ),
+
                       const SizedBox(height: 12),
+
                       InputField(
                         label: "Email",
                         controller: _emailCtrl,
                         onChanged: profileController.updateEmail,
                         errorText: profileController.emailError,
                       ),
+
                       const SizedBox(height: 12),
+
                       DropdownButtonFormField<String>(
                         decoration: InputDecoration(
                           labelText: "Favorite Category",
@@ -80,7 +81,9 @@ class _ProfileViewState extends State<ProfileView> {
                           }
                         },
                       ),
+
                       const SizedBox(height: 12),
+
                       InputField(
                         label: "Password",
                         controller: _passwordCtrl,
@@ -88,7 +91,9 @@ class _ProfileViewState extends State<ProfileView> {
                         onChanged: profileController.updatePassword,
                         errorText: profileController.passwordError,
                       ),
+
                       const SizedBox(height: 12),
+
                       InputField(
                         label: "Confirm Password",
                         controller: _confirmPasswordCtrl,
@@ -96,9 +101,23 @@ class _ProfileViewState extends State<ProfileView> {
                         onChanged: profileController.updateConfirmPassword,
                         errorText: profileController.confirmPasswordError,
                       ),
+
                       const SizedBox(height: 20),
+
+                      profileController.isLoading ?
+                      LoadingView(message: "Saving profile...") :
                       ElevatedButton(
-                        onPressed: () => profileController.saveProfile(),
+                        onPressed: (){
+                          profileController.saveUserProfile(
+                            ProfileModel(
+                               fullName:  _nameCtrl.text,
+                                email: _emailCtrl.text,
+                                favouriteCategory: profileController.favoriteCategory,
+                                password: _passwordCtrl.text,
+                                confirmPassword: _confirmPasswordCtrl.text
+                            )
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
@@ -107,13 +126,17 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                         child: const Text("Save"),
                       ),
-                      if (profileController.successMessage.isNotEmpty) ...[
+
+                      if (profileController.successMessage.isNotEmpty || profileController.errorMessage.isNotEmpty) ...[
+
                         const SizedBox(height: 20),
+
                         Text(
                           profileController.successMessage,
-                          style: const TextStyle(color: Colors.green),
+                          style: TextStyle(color: profileController.successMessage.isNotEmpty ? Colors.green : Colors.red),
                           textAlign: TextAlign.center,
                         ),
+
                       ],
                     ],
                   ),

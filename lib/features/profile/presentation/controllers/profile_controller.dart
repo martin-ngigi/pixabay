@@ -115,15 +115,14 @@ class ProfileController extends Cubit<int> {
     try {
       final response = await profileUseCases.saveProfile(profileModel);
 
-      if(response.statusCode == 200) {
+      if(response.statusCode == 200 || response.statusCode == 201) {
         ProfileModel profileModel = ProfileModel.fromJson(response.data);
         successMessage = "User with id ${profileModel.id} saved successfully.";
       }
       else {
         errorMessage = "Failed to fetch data. Please try again.";
       }
-      print("Profile data: $response");
-      emit(state > 0 ? 0 : 1);
+      print("Profile data: $response successMessage $successMessage");
     }
     catch (e) {
       print("Error fetching Profile data: $e");

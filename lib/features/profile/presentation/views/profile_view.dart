@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixabay/core/components/app_input_field.dart';
+import 'package:pixabay/core/utils/navigatorkey.dart';
 import 'package:pixabay/features/profile/data/models/profile_model.dart';
 import 'package:pixabay/features/profile/presentation/controllers/profile_controller.dart';
 import 'package:pixabay/core/components/loading_view.dart';
@@ -23,7 +24,8 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     super.initState();
-    profileController = BlocProvider.of<ProfileController>(context);
+    //profileController = BlocProvider.of<ProfileController>(context);
+    profileController = BlocProvider.of<ProfileController>(NavigationService.navigatorKey.currentContext!);
   }
 
   @override

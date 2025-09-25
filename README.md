@@ -11,12 +11,12 @@ flutter run -d chrome --web-browser-flag "--disable-web-security" --web-browser-
 
 ## Screenshots
 
-<!--| Light Mode  |-->
-<!--|-----------------------------|-->
-<!--| ![](screenshots/1.Loading.png)                |-->
-<!--| ![](screenshots/2.Home.png)                |-->
-<!--| ![](screenshots/3.Gallery.png)                |-->
-<!--| ![](screenshots/4.Profile.png)                |-->
+| Light Mode  |
+|-------------|
+| ![](screenshots/1.Loading.png) |
+| ![](screenshots/2.Home.png)    |
+| ![](screenshots/3.Gallery.png) |
+| ![](screenshots/4.Profile.png) |
 
 ## Tech Stacks used:
 1. Flutter framework + Dart language

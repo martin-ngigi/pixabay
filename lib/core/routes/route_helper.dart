@@ -13,7 +13,7 @@ class AppRoutes{
 
   Map<String, WidgetBuilder> routes(){
     return {
-      SPLASH: (context) => Text("Splash screen"),
+      SPLASH: (context) => DashboardView(),
       DASHBOARD: (context) => DashboardView(),
       HOME: (context) => HomeView(),
       GALLERY: (context) => GalleryView(),

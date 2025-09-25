@@ -12,7 +12,7 @@ class HomeController extends Cubit<int>{
 
   Future<void> fetchHomeData( String query) async {
     updateLoadingBar(true);
-    //return;
+    return;
 
     try {
       final response = await homeUseCases.executeGetHomeData(query);

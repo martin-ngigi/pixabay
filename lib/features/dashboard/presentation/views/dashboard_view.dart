@@ -91,7 +91,7 @@ class _DashboardViewState extends State<DashboardView> {
             else { // Show Drawer (hamburger menu)
               return Scaffold(
                   appBar: AppBar(
-                    title: const Text("Main content"),
+                    title: const Text("Pixabay website"),
                   ),
                   drawer: Drawer(
                     child: SideMenuView(

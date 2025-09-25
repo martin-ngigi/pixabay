@@ -1,101 +1,87 @@
 import 'package:dio/dio.dart';
-import 'package:pixabay/core/utils/constants.dart';
 
-class HttpUtil{
-  /// singleton - you only create/initialize one class
-  /// We maintain one instance of the class through out the app
-  static final HttpUtil _instance = HttpUtil._internal();
+class HttpUtil {
+  final Dio dio;
+  final String? accessToken;
 
-  factory HttpUtil() {
-    return _instance;
-  }
-
-  late Dio dio;
-
-  HttpUtil._internal() {
-    BaseOptions options = BaseOptions(
-      baseUrl: Constants.PIXABAY_BASE_URL,
-      connectTimeout: Duration(seconds: 30),
-      receiveTimeout: Duration(seconds: 30),
+  HttpUtil(String baseUrl, {this.accessToken})
+      : dio = Dio(
+    BaseOptions(
+      baseUrl: baseUrl,
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
       headers: {
-        //'Accept': '*/*',
         'Accept-Encoding': 'deflate, gzip',
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
-        //'Content-Type': ' application/json',
+        'User-Agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
       },
-     // contentType: "application/json; charset=utf-8",
       contentType: "application/json",
-      responseType: ResponseType.json
-    );
+      responseType: ResponseType.json,
+    ),
+  );
 
-    /// initialize Dio
-    dio = Dio(options);
-  }
-
-  /// POST REQUEST
-  Future post(String path,{
-    dynamic data,
-     Map<String, dynamic>? queryParameters,
-     Options? options
-    }) async {
-    Options requestOptions = options ?? Options();
-
-    /// if options doesn't exist, use options else create new Options
-     requestOptions.headers = requestOptions.headers ?? {};
-     Map<String, dynamic>? authorization = getAuthorization();
-     if(authorization != null){
-       requestOptions.headers!.addAll(authorization);
-     }
-
-    print("---> [HttpUtil][POST] URL: ${path}");
-
-    Response response = await dio.post(path,
-       data: data,
-       queryParameters: queryParameters,
-       options: requestOptions
-     );
-
-    print("---> [HttpUtil][POST] URL: ${response.requestOptions.uri}");
-    print("---> [HttpUtil][POST] Status: ${response.statusCode}");
-    print("---> [HttpUtil][POST] Raw Response: ${response.data}");
-    print("---> [HttpUtil][POST] response: ${response}");
-
-    return response;
-   }
-
-  Map<String, dynamic>? getAuthorization(){
-    var headers = <String, dynamic>{};
-    var accessToken = Constants.ACCESS_TOKEN;
-    if(accessToken.isNotEmpty){
-      headers['Authorization'] = 'Bearer $accessToken';
+  /// Attach authorization headers if present
+  Map<String, dynamic>? _getAuthorization() {
+    if (accessToken != null && accessToken!.isNotEmpty) {
+      return {'Authorization': 'Bearer $accessToken'};
     }
-    return headers;
+    return null;
   }
 
-  /// GET REQUEST
-  Future get(String path,{
-    dynamic data,
-    Options? options
-  }) async {
-    Options requestOptions = options ?? Options();
-
-    /// if options doesn't exist, use options else create new Options
+  /// POST
+  Future<Response> post(
+      String path, {
+        dynamic data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+      }) async {
+    final requestOptions = options ?? Options();
     requestOptions.headers = requestOptions.headers ?? {};
-    Map<String, dynamic>? authorization = getAuthorization();
-    if(authorization != null){
+
+    final authorization = _getAuthorization();
+    if (authorization != null) {
       requestOptions.headers!.addAll(authorization);
     }
 
-    print("---> [HttpUtil][GET] URL: ${Constants.PIXABAY_BASE_URL}${path}");
-    var response = await dio.get(path,
-        data: data,
-        options: requestOptions
+    print("---> [POST] URL: ${dio.options.baseUrl}$path");
+
+    final response = await dio.post(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: requestOptions,
     );
 
-    print("---> [HttpUtil][GET] URL: ${response.requestOptions.uri}");
-    print("---> [HttpUtil][GET] Status: ${response.statusCode}");
-    print("---> [HttpUtil][GET] Raw Response: ${response.data}");
-    print("---> [HttpUtil][GET] Raw Response: ${response.data.toString()}");
+    print("---> [POST] Status: ${response.statusCode}");
+    print("---> [POST] Raw Response: ${response.data}");
+
+    return response;
+  }
+
+  /// GET
+  Future<Response> get(
+      String path, {
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+      }) async {
+    final requestOptions = options ?? Options();
+    requestOptions.headers = requestOptions.headers ?? {};
+
+    final authorization = _getAuthorization();
+    if (authorization != null) {
+      requestOptions.headers!.addAll(authorization);
+    }
+
+    print("---> [GET] URL: ${dio.options.baseUrl}$path");
+
+    final response = await dio.get(
+      path,
+      queryParameters: queryParameters,
+      options: requestOptions,
+    );
+
+    print("---> [GET] Status: ${response.statusCode}");
+    print("---> [GET] Raw Response: ${response.data}");
 
     return response;
   }
